@@ -2,18 +2,24 @@ import { NorthDirection, EastDirection, SouthDirection, WestDirection, Direction
 import Timer from './timer';
 
 export interface CompassProps {
-    north: DirectionProps
+    active: boolean
     east: DirectionProps
+    enabled: boolean
+    endTime: number
+    north: DirectionProps
     south: DirectionProps
     west: DirectionProps
-    endTime: number
 }
 
 export function Compass(props: CompassProps) {
-    const { north, east, south, west, endTime } = props;
+    const { active, east, enabled, endTime, north, south, west } = props;
+
+    if (!enabled) {
+        return null;
+    }
 
     return (
-        <div id='compass'>
+        <div id='compass' className={active ? 'active' : 'inactive'}>
             <Timer endTime={endTime} />
             <NorthDirection { ...north } />
             <EastDirection { ...east  } />

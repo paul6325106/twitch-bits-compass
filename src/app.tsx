@@ -1,40 +1,79 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 
 import Chat from './chat';
+import { getChannelName } from "./params";
 import { Compass, CompassProps } from "./components/compass";
 
 import './App.css';
 
-function getChannelName(): string {
-    const channelName = new URLSearchParams(document.location.search).get('channelName');
+type CompassAction =
+    | { type: 'startCompass' }
+    | { type: 'addBits' }
+    | { type: 'endCompass' }
+    | { type: 'dismissCompass' };
 
-    if (!channelName) {
-        throw "Unknown channel name";
+const initialCompass: CompassProps = {
+    active: false,
+    east: {
+        bits: 0,
+        enabled: false,
+    },
+    enabled: false,
+    endTime: 0,
+    north: {
+        bits: 0,
+        enabled: false,
+    },
+    south: {
+        bits: 0,
+        enabled: false,
+    },
+    west: {
+        bits: 0,
+        enabled: false,
+    },
+}
+
+function compassReducer(compass: CompassProps, action: CompassAction): CompassProps {
+    // TODO
+    switch (action.type) {
+        case "startCompass":
+            return { ...compass };
+        case "addBits":
+            return { ...compass };
+        case "endCompass":
+            return { ...compass };
+        case "dismissCompass":
+            return { ...compass };
+        default:
+            return compass;
     }
-
-    return channelName;
 }
 
 function App() {
-    const [compass, setCompass] = useState<CompassProps | null>(null);
+    const [compass, dispatch] = useReducer(compassReducer, initialCompass);
 
     useEffect(() => {
         const chat = Chat(getChannelName());
 
+        // TODO
         chat.onStartCompass(() => {
-            // TODO
+            dispatch({ type: 'startCompass' });
         });
 
+        // TODO
         chat.onAddBits(() => {
-            // TODO
+            dispatch({ type: 'addBits' });
         });
 
+        // TODO
         chat.onEndCompass(() => {
-            // TODO
+            dispatch({ type: 'endCompass' });
         });
 
+        // TODO
         chat.onDismissCompass(() => {
-            // TODO
+            dispatch({ type: 'dismissCompass' });
         });
 
         return () => {
@@ -42,7 +81,7 @@ function App() {
         }
     }, []);
 
-    return compass ? <Compass {...compass} /> : null;
+    return <Compass {...compass} />;
 }
 
 export default App;
