@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useEffect, useReducer } from "react";
 
 import Chat from './chat';
@@ -8,7 +9,7 @@ import './App.css';
 
 type CompassAction =
     | { type: 'startCompass' }
-    | { type: 'addBits' }
+    | { type: 'addBits', directionType: string, bits: number }
     | { type: 'endCompass' }
     | { type: 'dismissCompass' };
 
@@ -35,16 +36,17 @@ const initialCompass: CompassProps = {
 }
 
 function compassReducer(compass: CompassProps, action: CompassAction): CompassProps {
-    // TODO
     switch (action.type) {
         case "startCompass":
+            // TODO
             return { ...compass };
         case "addBits":
-            return { ...compass };
+            const { directionType, bits } = action;
+            return _.update({ ...compass }, [directionType, 'bits'], oldBits => oldBits + bits);
         case "endCompass":
-            return { ...compass };
+            return { ...compass, active: false };
         case "dismissCompass":
-            return { ...compass };
+            return initialCompass;
         default:
             return compass;
     }
@@ -61,17 +63,14 @@ function App() {
             dispatch({ type: 'startCompass' });
         });
 
-        // TODO
-        chat.onAddBits(() => {
-            dispatch({ type: 'addBits' });
+        chat.onAddBits((directionType, bits) => {
+            dispatch({ type: 'addBits', directionType, bits });
         });
 
-        // TODO
         chat.onEndCompass(() => {
             dispatch({ type: 'endCompass' });
         });
 
-        // TODO
         chat.onDismissCompass(() => {
             dispatch({ type: 'dismissCompass' });
         });
