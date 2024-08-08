@@ -5,7 +5,7 @@ interface CircleProps {
     percentage: number;
 }
 
-function Circle({ className, percentage }: CircleProps) {
+function DirectionCircle({ className, percentage }: CircleProps) {
     const radius = 45;
 
     // TODO this is very almost but not actually the right idea
@@ -38,11 +38,11 @@ export default function Center({ north, east, south, west }: CenterProps) {
     return (
         <div id='center'>
             <svg viewBox='0 0 100 100'>
-                <Circle className='circle-back' percentage={1} />
-                <Circle className='circle-west' percentage={westPercentage} />
-                <Circle className='circle-south' percentage={southPercentage} />
-                <Circle className='circle-east' percentage={eastPercentage} />
-                <Circle className='circle-north' percentage={northPercentage} />
+                <DirectionCircle className='circle-back' percentage={1} />
+                <DirectionCircle className='circle-west' percentage={westPercentage} />
+                <DirectionCircle className='circle-south' percentage={southPercentage} />
+                <DirectionCircle className='circle-east' percentage={eastPercentage} />
+                <DirectionCircle className='circle-north' percentage={northPercentage} />
             </svg>
         </div>
     );
