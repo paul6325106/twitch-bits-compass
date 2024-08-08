@@ -87,10 +87,6 @@ body {
     margin: auto;
     text-align: center;
     transition: opacity 1s;
-
-    .inactive & {
-        opacity: 0.5;
-    }
 }
 
 .direction-bits {
