@@ -7,12 +7,10 @@ function formatBits(bits: number): string {
     return bits.toLocaleString('en-US', {
         currency: 'USD',
         style: 'currency',
-    })
+    });
 }
 
-function Direction(props: DirectionProps, label: string, id: string) {
-    const { bits, enabled } = props;
-
+function Direction({ bits, enabled }: DirectionProps, label: string, id: string) {
     if (!enabled) {
         return null;
     }

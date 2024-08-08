@@ -1,7 +1,7 @@
 import { NorthDirection, EastDirection, SouthDirection, WestDirection, DirectionProps } from './direction';
 import Timer from './timer';
 
-interface CompassProps {
+export interface CompassProps {
     north: DirectionProps
     east: DirectionProps
     south: DirectionProps
@@ -9,7 +9,7 @@ interface CompassProps {
     endTime: number
 }
 
-export default function Compass(props: CompassProps) {
+export function Compass(props: CompassProps) {
     const { north, east, south, west, endTime } = props;
 
     return (

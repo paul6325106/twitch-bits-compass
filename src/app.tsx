@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import Chat from './chat';
-import Compass from "./components/compass";
+import { Compass, CompassProps } from "./components/compass";
 
 import './App.css';
 
@@ -16,7 +16,7 @@ function getChannelName(): string {
 }
 
 function App() {
-    const [state, setState] = useState(null);
+    const [compass, setCompass] = useState<CompassProps | null>(null);
 
     useEffect(() => {
         const chat = Chat(getChannelName());
@@ -42,14 +42,7 @@ function App() {
         }
     }, []);
 
-    if (!state) {
-        return null;
-    }
-
-    // TODO
-    return (
-        <Compass />
-    )
+    return compass ? <Compass {...compass} /> : null;
 }
 
 export default App;
