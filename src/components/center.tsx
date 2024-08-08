@@ -7,14 +7,16 @@ interface CircleProps {
 
 function DirectionCircle({ className, percentage }: CircleProps) {
     const radius = 45;
+    const circumference = 2 * Math.PI * radius;
+
 
     // TODO this is very almost but not actually the right idea
     const style = {
-        strokeDasharray: 2 * Math.PI * radius * percentage
+        strokeDasharray: `${circumference * percentage}, ${circumference}`
     };
 
     return (
-        <circle id={className} className='circle' style={style} r={radius} cx='50' cy='50' fill='none' />
+        <circle id={className} className='circle' style={style} r={radius} cx='50' cy='50' />
     );
 }
 
