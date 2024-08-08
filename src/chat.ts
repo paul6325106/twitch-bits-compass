@@ -1,18 +1,18 @@
-import ComfyJS from "comfy.js";
+import ComfyJS, { OnMessageFlags } from "comfy.js";
 
-function getChannelName() {
-    return new URLSearchParams(location.search).channelName;
-}
-
-function hasPermission(flags) {
+function hasPermission(flags: OnMessageFlags) {
     return flags.broadcaster || flags.mod;
 }
 
-function parseCompassParams(message) {
+function parseCommandParams(message: string) {
     // TODO
 }
 
-function Chat() {
+function parseCheerMessage(message: string) {
+    // TODO
+}
+
+function Chat(channelName: string) {
     let startCompass = null;
     const onStartCompass = callback => {
         startCompass = callback;
@@ -28,24 +28,27 @@ function Chat() {
         endCompass = callback;
     }
 
-    ComfyJS.Init(getChannelName());
+    let hideCompass = null;
+    const onHideCompass = callback => {
+        hideCompass = callback;
+    }
+
+    ComfyJS.Init(channelName);
 
     ComfyJS.onCommand = (user, command, message, flags, extra) => {
         if (!hasPermission(flags) || command !== 'compass') {
             return;
         }
 
-        // TODO parseParams
-
-        // if start and inactive, startCompass, setTimer for stopCompass
-
-        // if kill and active, stopCompass, clearCompass
-
-        // if clear, stop if active, clear
+        // TODO parseCommandParams
+        // TODO onStartCompass
+        // TODO onEndCompass
+        // TODO onHideCompass
     };
 
     ComfyJS.onCheer = ( user, message, bits, flags, extra ) => {
-        // TODO parse direction from message
+        // TODO parseCheerMessage
+        // TODO onAddBits
     }
 
     const disconnect = () => {

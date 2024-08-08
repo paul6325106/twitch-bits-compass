@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 
 import Chat from './chat';
-import Compass from "./compass";
+import Compass from "./components/compass";
 
 import './App.css';
+
+function getChannelName() {
+    return new URLSearchParams(document.location.search).get('channelName');
+}
 
 function getInitialState() {
     return {
@@ -39,4 +43,3 @@ function App() {
 }
 
 export default App;
-
