@@ -5,38 +5,48 @@ import Compass from "./components/compass";
 
 import './App.css';
 
-function getChannelName() {
-    return new URLSearchParams(document.location.search).get('channelName');
-}
+function getChannelName(): string {
+    const channelName = new URLSearchParams(document.location.search).get('channelName');
 
-function getInitialState() {
-    return {
-        north: {
-            enabled: false,
-            bits: 0,
-        },
-        east: {
-            enabled: false,
-            bits: 0,
-        },
-        south: {
-            enabled: false,
-            bits: 0,
-        },
-        west: {
-            enabled: false,
-            bits: 0,
-        },
+    if (!channelName) {
+        throw "Unknown channel name";
     }
+
+    return channelName;
 }
 
 function App() {
-    const [state, setState] = useState(getInitialState());
+    const [state, setState] = useState(null);
 
     useEffect(() => {
+        const chat = Chat(getChannelName());
 
+        chat.onStartCompass(() => {
+            // TODO
+        });
+
+        chat.onAddBits(() => {
+            // TODO
+        });
+
+        chat.onEndCompass(() => {
+            // TODO
+        });
+
+        chat.onDismissCompass(() => {
+            // TODO
+        });
+
+        return () => {
+            chat.disconnect();
+        }
     }, []);
 
+    if (!state) {
+        return null;
+    }
+
+    // TODO
     return (
         <Compass />
     )

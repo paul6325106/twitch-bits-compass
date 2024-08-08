@@ -1,6 +1,11 @@
 import ComfyJS, { OnMessageFlags } from "comfy.js";
 
-function hasPermission(flags: OnMessageFlags) {
+type StartCompassCallback = () => void; // TODO
+type AddBitsCallback = () => void; // TODO
+type EndCompassCallback = () => void; // TODO
+type DismissCompassCallback = () => void; // TODO
+
+function hasPermission(flags: OnMessageFlags): boolean {
     return flags.broadcaster || flags.mod;
 }
 
@@ -12,30 +17,30 @@ function parseCheerMessage(message: string) {
     // TODO
 }
 
-function Chat(channelName: string) {
+export default function Chat(channelName: string) {
     let startCompass = null;
-    const onStartCompass = callback => {
+    const onStartCompass = (callback: StartCompassCallback) => {
         startCompass = callback;
     }
 
     let addBits = null;
-    const onAddBits = callback => {
+    const onAddBits = (callback: AddBitsCallback) => {
         addBits = callback;
     }
 
     let endCompass = null;
-    const onEndCompass = callback => {
+    const onEndCompass = (callback: EndCompassCallback) => {
         endCompass = callback;
     }
 
     let hideCompass = null;
-    const onHideCompass = callback => {
+    const onDismissCompass = (callback: DismissCompassCallback) => {
         hideCompass = callback;
     }
 
     ComfyJS.Init(channelName);
 
-    ComfyJS.onCommand = (user, command, message, flags, extra) => {
+    ComfyJS.onCommand = (_user, command, message, flags, _extra) => {
         if (!hasPermission(flags) || command !== 'compass') {
             return;
         }
@@ -43,10 +48,10 @@ function Chat(channelName: string) {
         // TODO parseCommandParams
         // TODO onStartCompass
         // TODO onEndCompass
-        // TODO onHideCompass
+        // TODO onDismissCompass
     };
 
-    ComfyJS.onCheer = ( user, message, bits, flags, extra ) => {
+    ComfyJS.onCheer = ( _user, message, bits, _flags, _extra ) => {
         // TODO parseCheerMessage
         // TODO onAddBits
     }
@@ -59,8 +64,7 @@ function Chat(channelName: string) {
         onStartCompass,
         onAddBits,
         onEndCompass,
+        onDismissCompass,
         disconnect,
     }
 }
-
-export default Chat;

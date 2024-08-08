@@ -18,8 +18,11 @@ function seconds(remainingTime: number): string {
     return format(value);
 }
 
-function Timer(props) {
-    const { endTime } = props;
+interface TimerProps {
+    endTime: number;
+}
+
+export default function Timer({ endTime }: TimerProps) {
     const [currentTime, setCurrentTime] = useState(0);
 
     useEffect(() => {
@@ -44,5 +47,3 @@ function Timer(props) {
         </div>
     );
 }
-
-export default Timer;
