@@ -11,12 +11,8 @@ function formatBits(bits: number): string {
 }
 
 function Direction({ bits, enabled }: DirectionProps, label: string, id: string) {
-    if (!enabled) {
-        return null;
-    }
-
     return (
-        <div id={id} className='direction'>
+        <div id={id} className={`direction ${enabled ? 'visible' : 'invisible'}`}>
             <div className='direction-label'>{label}</div>
             <div className='direction-bits'>{formatBits(bits)}</div>
         </div>

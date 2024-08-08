@@ -23,7 +23,7 @@ export function Compass(props: CompassProps) {
 
     return (
         <div id='compass' className={active ? 'active' : 'inactive'}>
-            <Center />
+            <Center north={north} east={east} south={south} west={west} />
             <Timer endTime={endTime} />
             <NorthDirection { ...north } />
             <EastDirection { ...east  } />
