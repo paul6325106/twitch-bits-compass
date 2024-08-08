@@ -1,5 +1,6 @@
 import '../style/compass.scss';
 
+import Center from './center';
 import { NorthDirection, EastDirection, SouthDirection, WestDirection, DirectionProps } from './direction';
 import Timer from './timer';
 
@@ -22,6 +23,7 @@ export function Compass(props: CompassProps) {
 
     return (
         <div id='compass' className={active ? 'active' : 'inactive'}>
+            <Center />
             <Timer endTime={endTime} />
             <NorthDirection { ...north } />
             <EastDirection { ...east  } />

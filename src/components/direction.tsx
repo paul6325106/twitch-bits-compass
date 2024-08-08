@@ -17,8 +17,8 @@ function Direction({ bits, enabled }: DirectionProps, label: string, id: string)
 
     return (
         <div id={id} className='direction'>
-            <div className='direction-bits'>{formatBits(bits)}</div>
             <div className='direction-label'>{label}</div>
+            <div className='direction-bits'>{formatBits(bits)}</div>
         </div>
     );
 }

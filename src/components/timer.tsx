@@ -8,14 +8,10 @@ function format(number: number): string {
     return String(number).padStart(2, '0');
 }
 
-function minutes(remainingTime: number): string {
-    const value = Math.ceil((remainingTime / (1000 * 60)) % 60)
-    return format(value);
-}
-
-function seconds(remainingTime: number): string {
-    const value =  Math.ceil((remainingTime / 1000) % 60);
-    return format(value);
+function getTimerText(remainingTime: number): string {
+    const seconds =  Math.floor((remainingTime / 1000) % 60);
+    const minutes = Math.floor((remainingTime / (1000 * 60)) % 60)
+    return `${format(minutes)}:${format(seconds)}`;
 }
 
 interface TimerProps {
@@ -26,6 +22,8 @@ export default function Timer({ endTime }: TimerProps) {
     const [currentTime, setCurrentTime] = useState(getCurrentTime());
 
     useEffect(() => {
+        setCurrentTime(getCurrentTime());
+
         const interval = setInterval(() => {
             setCurrentTime(getCurrentTime());
         }, 1000);
@@ -37,13 +35,9 @@ export default function Timer({ endTime }: TimerProps) {
 
     const remainingTime = Math.max(0, endTime - currentTime);
 
-    if (remainingTime === 0) {
-        return null;
-    }
-
     return (
-        <div id='timer'>
-            {minutes(remainingTime)}:{seconds(remainingTime)}
+        <div id='timer' className={`${remainingTime === 0 ? 'invisible' : 'visible'}`}>
+            {getTimerText(remainingTime)}
         </div>
     );
 }
