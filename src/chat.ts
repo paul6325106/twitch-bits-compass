@@ -32,7 +32,7 @@ const regexNews = /\b[NnEeWwSs]+\b/;
 
 function parseNews(message: string): string {
     const match = message.match(regexNews);
-    return match ? match[0].toLowerCase() : '';
+    return match ? match[0].toLowerCase() : 'news';
 }
 
 function parseCommandParams(message: string): CommandParams {
@@ -52,6 +52,21 @@ function parseCommandParams(message: string): CommandParams {
 }
 
 export type DirectionType = 'north' | 'east' | 'south' | 'west';
+
+function getRandomDirectionType(): DirectionType {
+    const random = Math.floor(Math.random() * 4);
+    switch (random) {
+        default:
+        case 0:
+            return 'north';
+        case 1:
+            return 'east'
+        case 2:
+            return 'south';
+        case 3:
+            return 'west';
+    }
+}
 
 function parseCheerMessage(message: string): DirectionType | null {
     const lowerCase = message.toLowerCase();
@@ -96,6 +111,11 @@ export default function Chat(channelName: string) {
     ComfyJS.Init(channelName);
 
     ComfyJS.onCommand = (_user, command, message, flags, _extra) => {
+        if (hasPermission(flags) && command === 'testcompassbits' && addBits) {
+            addBits(getRandomDirectionType(), Math.floor(Math.random() * 500));
+            return;
+        }
+
         if (!hasPermission(flags) || command !== 'compass') {
             return;
         }

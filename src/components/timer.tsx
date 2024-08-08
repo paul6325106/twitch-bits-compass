@@ -23,6 +23,8 @@ interface TimerProps {
 }
 
 export default function Timer({ endTime }: TimerProps) {
+    // TODO always shows 00:00 for 1 second
+
     const [currentTime, setCurrentTime] = useState(0);
 
     useEffect(() => {

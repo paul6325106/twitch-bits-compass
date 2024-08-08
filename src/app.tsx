@@ -39,7 +39,7 @@ function compassReducer(compass: CompassProps, action: CompassAction): CompassPr
         case "startCompass":
             const { north, east, south, west } = action;
             return {
-                active: false,
+                active: true,
                 east: {
                     bits: 0,
                     enabled: east,
