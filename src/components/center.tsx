@@ -9,8 +9,6 @@ function DirectionCircle({ className, percentage }: CircleProps) {
     const radius = 45;
     const circumference = 2 * Math.PI * radius;
 
-
-    // TODO this is very almost but not actually the right idea
     const style = {
         strokeDasharray: `${circumference * percentage}, ${circumference}`
     };
