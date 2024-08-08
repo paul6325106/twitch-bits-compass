@@ -33,6 +33,8 @@ export default function Center({ north, east, south, west }: CenterProps) {
     const southPercentage = totalBits ? eastPercentage + (south.bits / totalBits) : 0;
     const westPercentage = totalBits ? southPercentage + (west.bits / totalBits) : 0;
 
+    // TODO would like a little bit more decoration in the middle of the circle
+
     return (
         <div id='center'>
             <svg viewBox='0 0 100 100'>
