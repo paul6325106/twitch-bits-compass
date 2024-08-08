@@ -4,7 +4,7 @@ export interface DirectionProps {
 }
 
 function formatBits(bits: number): string {
-    return bits.toLocaleString('en-US', {
+    return (bits / 100).toLocaleString('en-US', {
         currency: 'USD',
         style: 'currency',
     });
