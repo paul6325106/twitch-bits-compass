@@ -24,17 +24,17 @@ function Direction({ bits, enabled }: DirectionProps, label: string, id: string)
 }
 
 export function NorthDirection(props: DirectionProps) {
-    return Direction(props, 'North', 'direction-north');
+    return Direction(props, '#North', 'direction-north');
 }
 
 export function EastDirection(props: DirectionProps) {
-    return Direction(props, 'East', 'direction-east');
+    return Direction(props, '#East', 'direction-east');
 }
 
 export function SouthDirection(props: DirectionProps) {
-    return Direction(props, 'South', 'direction-south');
+    return Direction(props, '#South', 'direction-south');
 }
 
 export function WestDirection(props: DirectionProps) {
-    return Direction(props, 'West', 'direction-west');
+    return Direction(props, '#West', 'direction-west');
 }

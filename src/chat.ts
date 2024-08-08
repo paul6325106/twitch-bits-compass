@@ -1,16 +1,54 @@
 import ComfyJS, { OnMessageFlags } from "comfy.js";
 
-type StartCompassCallback = () => void; // TODO
+type StartCompassCallback = (north: boolean, east: boolean, south: boolean, west: boolean) => void;
+type StopCompassCallback = () => void;
+type StartTimerCallback = (milliseconds: number) => void;
+type StopTimerCallback = () => void;
 type AddBitsCallback = (directionType: DirectionType, bits: number) => void;
-type EndCompassCallback = () => void;
-type DismissCompassCallback = () => void;
 
 function hasPermission(flags: OnMessageFlags): boolean {
     return flags.broadcaster || flags.mod;
 }
 
-function parseCommandParams(message: string) {
-    // TODO
+type CommandParams = {
+    timer: boolean
+    milliseconds: number
+    start: boolean
+    stop: boolean
+    north: boolean
+    east: boolean
+    south: boolean
+    west: boolean
+}
+
+const regexMinutes = /\b([0-9]+)[Mm]\b/;
+
+function parseMinutes(message: string): number {
+    const match = message.match(regexMinutes)
+    return match ? parseInt(match[1]) : 0;
+}
+
+const regexNews = /\b[NnEeWwSs]+\b/;
+
+function parseNews(message: string): string {
+    const match = message.match(regexNews);
+    return match ? match[0].toLowerCase() : '';
+}
+
+function parseCommandParams(message: string): CommandParams {
+    const minutes = parseMinutes(message);
+    const news = parseNews(message);
+
+    return {
+        timer: message.includes('timer'),
+        milliseconds: minutes * 60 * 1000,
+        start: message.includes('start'),
+        stop: message.includes('stop'),
+        north: news.includes('n'),
+        east: news.includes('e'),
+        south: news.includes('s'),
+        west: news.includes('w'),
+    }
 }
 
 export type DirectionType = 'north' | 'east' | 'south' | 'west';
@@ -36,19 +74,23 @@ export default function Chat(channelName: string) {
         startCompass = callback;
     }
 
+    let stopCompass: StopCompassCallback | null = null;
+    const onStopCompass = (callback: StopCompassCallback) => {
+        stopCompass = callback;
+    }
+    let startTimer: StartTimerCallback | null = null;
+    const onStartTimer = (callback: StartTimerCallback) => {
+        startTimer = callback;
+    }
+
+    let stopTimer: StopTimerCallback | null = null;
+    const onStopTimer = (callback: StopTimerCallback) => {
+        stopTimer = callback;
+    }
+
     let addBits: AddBitsCallback | null = null;
     const onAddBits = (callback: AddBitsCallback) => {
         addBits = callback;
-    }
-
-    let endCompass: EndCompassCallback | null = null;
-    const onEndCompass = (callback: EndCompassCallback) => {
-        endCompass = callback;
-    }
-
-    let dismissCompass: DismissCompassCallback | null = null;
-    const onDismissCompass = (callback: DismissCompassCallback) => {
-        dismissCompass = callback;
     }
 
     ComfyJS.Init(channelName);
@@ -58,10 +100,21 @@ export default function Chat(channelName: string) {
             return;
         }
 
-        // TODO parseCommandParams
-        // TODO onStartCompass
-        // TODO onEndCompass
-        // TODO onDismissCompass
+        const { timer, start, stop, milliseconds, north, east, south, west } = parseCommandParams(message);
+
+        if (timer) {
+            if (start && startTimer) {
+                startTimer(milliseconds);
+            } else if (stop && stopTimer) {
+                stopTimer();
+            }
+        } else {
+            if (start && startCompass) {
+                startCompass(north, east, south, west);
+            } else if (stop && stopCompass) {
+                stopCompass();
+            }
+        }
     };
 
     ComfyJS.onCheer = ( _user, message, bits, _flags, _extra ) => {
@@ -77,9 +130,10 @@ export default function Chat(channelName: string) {
 
     return {
         onStartCompass,
+        onStopCompass,
+        onStartTimer,
+        onStopTimer,
         onAddBits,
-        onEndCompass,
-        onDismissCompass,
         disconnect,
     }
 }

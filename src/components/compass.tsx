@@ -1,3 +1,5 @@
+import '../style/compass.scss';
+
 import { NorthDirection, EastDirection, SouthDirection, WestDirection, DirectionProps } from './direction';
 import Timer from './timer';
 

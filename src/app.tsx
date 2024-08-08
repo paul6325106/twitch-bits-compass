@@ -5,13 +5,12 @@ import Chat from './chat';
 import { getChannelName } from "./params";
 import { Compass, CompassProps } from "./components/compass";
 
-import './App.css';
-
 type CompassAction =
-    | { type: 'startCompass' }
-    | { type: 'addBits', directionType: string, bits: number }
-    | { type: 'endCompass' }
-    | { type: 'dismissCompass' };
+    | { type: 'startCompass', north: boolean, east: boolean, south: boolean, west: boolean }
+    | { type: 'stopCompass' }
+    | { type: 'startTimer', milliseconds: number }
+    | { type: 'stopTimer' }
+    | { type: 'addBits', directionType: string, bits: number };
 
 const initialCompass: CompassProps = {
     active: false,
@@ -38,15 +37,40 @@ const initialCompass: CompassProps = {
 function compassReducer(compass: CompassProps, action: CompassAction): CompassProps {
     switch (action.type) {
         case "startCompass":
-            // TODO
-            return { ...compass };
+            const { north, east, south, west } = action;
+            return {
+                active: false,
+                east: {
+                    bits: 0,
+                    enabled: east,
+                },
+                enabled: true,
+                endTime: 0,
+                north: {
+                    bits: 0,
+                    enabled: north,
+                },
+                south: {
+                    bits: 0,
+                    enabled: south,
+                },
+                west: {
+                    bits: 0,
+                    enabled: west,
+                }
+            };
+        case "stopCompass":
+            return initialCompass;
+        case 'startTimer':
+            const { milliseconds } = action;
+            const endTime = new Date().getTime(); + milliseconds;
+            return { ...compass, active: true, endTime };
+        case 'stopTimer':
+            const now = new Date().getTime();
+            return { ...compass, active: false, endTime: now };
         case "addBits":
             const { directionType, bits } = action;
             return _.update({ ...compass }, [directionType, 'bits'], oldBits => oldBits + bits);
-        case "endCompass":
-            return { ...compass, active: false };
-        case "dismissCompass":
-            return initialCompass;
         default:
             return compass;
     }
@@ -57,26 +81,37 @@ function App() {
 
     useEffect(() => {
         const chat = Chat(getChannelName());
+        let timeout: number | null = null;
 
-        // TODO
-        chat.onStartCompass(() => {
-            dispatch({ type: 'startCompass' });
+        chat.onStartCompass((north, east, south, west) => {
+            dispatch({ type: 'startCompass', north, east, south, west });
+        });
+
+        chat.onStopCompass(() => {
+            dispatch({ type: 'stopCompass' });
+            timeout && clearTimeout(timeout);
+        });
+
+        chat.onStartTimer((milliseconds) => {
+            dispatch({ type: 'startTimer', milliseconds });
+            timeout && clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                dispatch({ type: 'stopTimer' });
+            }, milliseconds);
+        });
+
+        chat.onStopTimer(() => {
+            dispatch({ type: 'stopTimer' });
+            timeout && clearTimeout(timeout);
         });
 
         chat.onAddBits((directionType, bits) => {
             dispatch({ type: 'addBits', directionType, bits });
         });
 
-        chat.onEndCompass(() => {
-            dispatch({ type: 'endCompass' });
-        });
-
-        chat.onDismissCompass(() => {
-            dispatch({ type: 'dismissCompass' });
-        });
-
         return () => {
             chat.disconnect();
+            timeout && clearTimeout(timeout);
         }
     }, []);
 
