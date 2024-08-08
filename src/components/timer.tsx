@@ -9,12 +9,12 @@ function format(number: number): string {
 }
 
 function minutes(remainingTime: number): string {
-    const value = Math.floor((remainingTime / (1000 * 60)) % 60)
+    const value = Math.ceil((remainingTime / (1000 * 60)) % 60)
     return format(value);
 }
 
 function seconds(remainingTime: number): string {
-    const value =  Math.floor((remainingTime / 1000) % 60);
+    const value =  Math.ceil((remainingTime / 1000) % 60);
     return format(value);
 }
 
