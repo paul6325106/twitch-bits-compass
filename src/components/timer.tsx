@@ -33,7 +33,7 @@ export default function Timer({ endTime }: TimerProps) {
         return () => {
             clearInterval(interval);
         }
-    }, [currentTime, endTime]);
+    }, [endTime]);
 
     const remainingTime = Math.max(0, endTime - currentTime);
 
