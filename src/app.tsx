@@ -63,7 +63,7 @@ function compassReducer(compass: CompassProps, action: CompassAction): CompassPr
             return initialCompass;
         case 'startTimer':
             const { milliseconds } = action;
-            const endTime = new Date().getTime(); + milliseconds;
+            const endTime = new Date().getTime() + milliseconds;
             return { ...compass, active: true, endTime };
         case 'stopTimer':
             const now = new Date().getTime();

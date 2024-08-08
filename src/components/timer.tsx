@@ -23,9 +23,7 @@ interface TimerProps {
 }
 
 export default function Timer({ endTime }: TimerProps) {
-    // TODO always shows 00:00 for 1 second
-
-    const [currentTime, setCurrentTime] = useState(0);
+    const [currentTime, setCurrentTime] = useState(getCurrentTime());
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -35,7 +33,7 @@ export default function Timer({ endTime }: TimerProps) {
         return () => {
             clearInterval(interval);
         }
-    }, [endTime]);
+    }, [currentTime, endTime]);
 
     const remainingTime = Math.max(0, endTime - currentTime);
 
