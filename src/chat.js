@@ -1,23 +1,63 @@
 import ComfyJS from "comfy.js";
 
-function listenToChat(channelName) {
-    ComfyJS.Init(channelName);
+function getChannelName() {
+    return new URLSearchParams(location.search).channelName;
+}
+
+function hasPermission(flags) {
+    return flags.broadcaster || flags.mod;
+}
+
+function parseCompassParams(message) {
+    // TODO
+}
+
+function Chat() {
+    let startCompass = null;
+    const onStartCompass = callback => {
+        startCompass = callback;
+    }
+
+    let addBits = null;
+    const onAddBits = callback => {
+        addBits = callback;
+    }
+
+    let endCompass = null;
+    const onEndCompass = callback => {
+        endCompass = callback;
+    }
+
+    ComfyJS.Init(getChannelName());
 
     ComfyJS.onCommand = (user, command, message, flags, extra) => {
-        if (!flags.broadcaster && !flags.mod) {
+        if (!hasPermission(flags) || command !== 'compass') {
             return;
         }
 
-        // TODO start compass
+        // TODO parseParams
 
-        // TODO set timer to end compass if duration set
+        // if start and inactive, startCompass, setTimer for stopCompass
 
-        // TODO end compass manually
+        // if kill and active, stopCompass, clearCompass
 
-        // TODO terminate compass
+        // if clear, stop if active, clear
     };
 
     ComfyJS.onCheer = ( user, message, bits, flags, extra ) => {
         // TODO parse direction from message
     }
+
+    const disconnect = () => {
+        ComfyJS.Disconnect();
+    }
+
+    return {
+        onStartCompass,
+        onAddBits,
+        onEndCompass,
+        disconnect,
+    }
 }
+
+export default Chat;

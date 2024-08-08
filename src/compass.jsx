@@ -1,5 +1,11 @@
+import { useEffect, useState } from "react";
+
 function Bits(props) {
-    const { direction } = props;
+    const { direction, enabled } = props;
+
+    if (!enabled) {
+        return null;
+    }
 
     // TODO
 
@@ -26,14 +32,34 @@ function WestBits(props) {
     return Bits({...props, direction: 'west'});
 }
 
+function getCurrentTime() {
+    return new Date().getTime();
+}
+
 function Timer(props) {
     const { endTime } = props;
+    const [currentTime, setCurrentTime] = useState(getCurrentTime());
 
-    // TODO
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentTime(getCurrentTime());
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        }
+    }, [endTime]);
+
+    const remainingTime = Math.max(0, endTime - currentTime);
+
+    const minutes = Math.floor((remainingTime / (1000 * 60)) % 60);
+    const seconds = Math.floor((remainingTime / 1000) % 60);
+
+    const formatted = number = String(number).padStart(2, '0');
 
     return (
         <div id='timer'>
-
+            {formatted(minutes)}:{formatted(seconds)}
         </div>
     );
 }
@@ -44,14 +70,15 @@ function Compass(props) {
     const now = new Date().getTime();
     const active = now <= endTime;
 
+    // TODO highlight winner if not active
+
     return (
         <div id='compass'>
-            {active && <Timer endTime={endTime} />}
-
-            {north  && <NorthBits { ...north}  />}
-            {east   && <EastBits  { ...east }  />}
-            {south  && <SouthBits { ...south } />}
-            {west   && <WestBits  { ...west }  />}
+            <Timer endTime={endTime} />
+            <NorthBits { ...north } />
+            <EastBits { ...east  } />
+            <SouthBits { ...south } />
+            <WestBits { ...west  } />
         </div>
     );
 }
