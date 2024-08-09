@@ -12,7 +12,7 @@ function hasPermission(flags: OnMessageFlags): boolean {
 
 type CommandParams = {
     timer: boolean
-    milliseconds: number
+    milliseconds: number | null
     start: boolean
     stop: boolean
     north: boolean
@@ -23,9 +23,9 @@ type CommandParams = {
 
 const regexMinutes = /\b([0-9]+)[Mm]\b/;
 
-function parseMinutes(message: string): number {
+function parseMinutes(message: string): number | null {
     const match = message.match(regexMinutes)
-    return match ? parseInt(match[1]) : 0;
+    return match ? parseInt(match[1]) : null;
 }
 
 const regexNews = /\b[NnEeWwSs]+\b/;
@@ -41,7 +41,7 @@ function parseCommandParams(message: string): CommandParams {
 
     return {
         timer: message.includes('timer'),
-        milliseconds: minutes * 60 * 1000,
+        milliseconds: minutes === null ? null : minutes * 60 * 1000,
         start: message.includes('start'),
         stop: message.includes('stop'),
         north: news.includes('n'),
@@ -123,7 +123,7 @@ export default function Chat(channelName: string) {
         const { timer, start, stop, milliseconds, north, east, south, west } = parseCommandParams(message);
 
         if (timer) {
-            if (start && startTimer) {
+            if (start && startTimer && milliseconds !== null) {
                 startTimer(milliseconds);
             } else if (stop && stopTimer) {
                 stopTimer();
