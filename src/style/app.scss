@@ -2,6 +2,7 @@ $north-color: #6ec8fa;
 $east-color: #96f06e;
 $south-color: #fa6982;
 $west-color: #f59b14;
+$ring-color: #808080;
 
 body {
     font-size: 32px;
@@ -45,22 +46,46 @@ body {
 
 #circle-north {
     stroke: $north-color;
+
+    &.loser {
+        #compass.inactive & {
+            stroke: $ring-color;
+        }
+    }
 }
 
 #circle-east {
     stroke: $east-color;
+
+    &.loser {
+        #compass.inactive & {
+            stroke: $ring-color;
+        }
+    }
 }
 
 #circle-south {
     stroke: $south-color;
+
+    &.loser {
+        #compass.inactive & {
+            stroke: $ring-color;
+        }
+    }
 }
 
 #circle-west {
     stroke: $west-color;
+
+    &.loser {
+        #compass.inactive & {
+            stroke: $ring-color;
+        }
+    }
 }
 
 #circle-back {
-    stroke: rgba(0, 0, 0, 0.5);
+    stroke: $ring-color;
 }
 
 #timer {
@@ -88,6 +113,12 @@ body {
     margin: auto;
     text-align: center;
     transition: opacity 1s;
+
+    &.loser {
+        #compass.inactive & {
+            opacity: 0.25;
+        }
+    }
 }
 
 .direction-bits {

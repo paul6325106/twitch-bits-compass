@@ -5,14 +5,14 @@ import { NorthDirection, EastDirection, SouthDirection, WestDirection } from './
 import Timer from './timer';
 
 export function Compass(props: CompassProps) {
-    const { active: _active, east, enabled, endTime, north, south, west } = props;
+    const { active, east, enabled, endTime, north, south, west } = props;
 
     if (!enabled) {
         return null;
     }
 
     return (
-        <div id='compass'>
+        <div id='compass' className={`${active ? 'active' : 'inactive'}`}>
             <Center north={north} east={east} south={south} west={west} />
             <Timer endTime={endTime} />
             <NorthDirection { ...north } />
