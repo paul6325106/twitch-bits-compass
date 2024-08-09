@@ -13,8 +13,8 @@ body {
 
 #compass {
     display: grid;
-    grid-template-columns: 200px 400px 200px;
-    grid-template-rows: 200px 200px 400px 200px;
+    grid-template-columns: 200px 200px 200px;
+    grid-template-rows: 200px 200px 200px 200px;
     font-family: "Inter", "Roobert", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -36,22 +36,22 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    height: 400px;
-    width: 400px;
+    height: 200px;
+    width: 200px;
 }
 
 #center svg {
     position: absolute;
     top: 0;
     left: 0;
-    height: 400px;
-    width: 400px;
+    height: 200px;
+    width: 200px;
     rotate: -45deg;
 }
 
 .circle {
-    height: 400px;
-    width: 400px;
+    height: 200px;
+    width: 200px;
     transition: stroke-dasharray 1s, stroke 1s;
     stroke-width: 10;
     fill: none;
