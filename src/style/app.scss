@@ -119,6 +119,14 @@ body {
             opacity: 0.25;
         }
     }
+
+    &.visible {
+        visibility: visible;
+    }
+
+    &.invisible {
+        visibility: hidden;
+    }
 }
 
 .direction-bits {
