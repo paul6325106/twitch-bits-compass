@@ -24,6 +24,13 @@ type CommandParams = {
     test: boolean
 }
 
+const regexSeconds = /\b([0-9]+)[Ss]\b/;
+
+function parseSeconds(message: string): number | null {
+    const match = message.match(regexSeconds)
+    return match ? parseInt(match[1]) : null;
+}
+
 const regexMinutes = /\b([0-9]+)[Mm]\b/;
 
 function parseMinutes(message: string): number | null {
@@ -40,7 +47,16 @@ function parseNews(message: string): string {
 
 function parseCommandParams(message: string): CommandParams {
     const minutes = parseMinutes(message);
+    const seconds = parseSeconds(message);
     const news = parseNews(message);
+
+    let milliseconds = 0;
+    if (minutes !== null) {
+        milliseconds += minutes * 60 * 1000;
+    }
+    if (seconds !== null) {
+        milliseconds += seconds * 1000;
+    }
 
     return {
         timer: message.includes('timer'),

@@ -51,7 +51,9 @@ You can stop the compass with `!compass stop`.
 
 #### Starting the timer
 
-While the compass in running, you can start a timer with a number of minutes: `!compass timer start 5m`.
+While the compass in running, you can start a timer. You should specify a duration with minutes with the suffix `m` (e.g. `!compass timer start 5m`) or seconds with the suffix `s` (e.g. `!compass timer start 30s`).
+
+When the duration ends, losing directions will become faded and no new Cheers will be acknowledged.
 
 Setting the timer while a timer is already running will update the timer with the new duration.
 
