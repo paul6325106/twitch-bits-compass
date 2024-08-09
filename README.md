@@ -9,7 +9,7 @@
 
 ### Customising
 
-The following properties can be modified in the `.env.` file:
+The following properties can be modified in the `.env` file:
 
 * `VITE_CHANNEL_NAME`: name of Twitch channel to connect to.
 * `VITE_NORTH_KEYWORD`: keyword for North direction in Cheer messages.
