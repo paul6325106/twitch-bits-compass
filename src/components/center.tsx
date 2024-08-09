@@ -1,4 +1,5 @@
 import { DirectionProps } from "../model";
+import middleSrc from '../assets/middle.png';
 
 interface DirectionCircleProps {
     id: string
@@ -36,8 +37,6 @@ export default function Center({ north, east, south, west }: CenterProps) {
     const westPercentage = totalBits ? southPercentage + (west.bits / totalBits) : 0;
     const northPercentage = totalBits ? westPercentage + (north.bits / totalBits) : 0;
 
-    // TODO would like a little bit more decoration in the middle of the circle
-
     return (
         <div id='center'>
             <svg viewBox='0 0 100 100'>
@@ -47,6 +46,7 @@ export default function Center({ north, east, south, west }: CenterProps) {
                 <DirectionCircle id='circle-south' percentage={southPercentage} winner={south.winner} />
                 <DirectionCircle id='circle-east' percentage={eastPercentage} winner={east.winner} />
             </svg>
+            <img src={middleSrc} alt='' />
         </div>
     );
 }

@@ -27,11 +27,23 @@ body {
     grid-row-end: 4;
     margin: auto;
     text-align: center;
+    position: relative;
     width: 100%;
     height: 100%;
 }
 
+#center img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 400px;
+    width: 400px;
+}
+
 #center svg {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 400px;
     width: 400px;
     rotate: -45deg;
