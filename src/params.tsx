@@ -10,15 +10,15 @@ if (!NORTH_KEYWORD) {
 
 export const EAST_KEYWORD = import.meta.env.VITE_EAST_KEYWORD;
 if (!EAST_KEYWORD) {
-    throw `Unvalid north keyword: ${EAST_KEYWORD}`;
+    throw `Unvalid east keyword: ${EAST_KEYWORD}`;
 }
 
 export const SOUTH_KEYWORD = import.meta.env.VITE_SOUTH_KEYWORD;
 if (!SOUTH_KEYWORD) {
-    throw `Unvalid north keyword: ${SOUTH_KEYWORD}`;
+    throw `Unvalid south keyword: ${SOUTH_KEYWORD}`;
 }
 
 export const WEST_KEYWORD = import.meta.env.VITE_WEST_KEYWORD;
 if (!WEST_KEYWORD) {
-    throw `Unvalid north keyword: ${WEST_KEYWORD}`;
+    throw `Unvalid west keyword: ${WEST_KEYWORD}`;
 }
