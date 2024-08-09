@@ -1,38 +1,48 @@
 # twitch-bits-compass
 
-TODO
+* Renders a compass overlay.
+* The compass can be controlled through chat commands.
+* Viewers can vote for a direction by including a keyword in their cheer message.
+* Minimal running requirements.
 
 # Building
 
-TODO
+Install Node.js. I wrote this against v20.12.2.
 
-npm run build
+Set the name of your channel as `VITE_CHANNEL_NAME` in `.env`.
+
+Then execute `npm run build`.
 
 # Running
 
-TODO
+Simply open `dist/index.html` in a Browser Source.
 
-Single file in /dist
+## Warning
 
-Load as local file in browser source
-
-Right now you set your channel name as a param
-
-file:///path/to/repo/twitch-bits-compass/dist/index.html?channelName=voodoocowboy
-
-But this doesn't work well with OBS, so this will change soon
-
-Highly recommend not ticking 'Shutdown source when not visible', because compass functionality is tied to browser source lifecycle
+Be aware that, as this exclusively runs in a browser context, that shutting the browser source down will clear the state (including all current contributions). It is highly recommended to not tick the 'Shutdown source when not visible' option if you want the compass to persist when you change scenes.
 
 # Commands
 
-TODO
+## Starting the compass
 
-* Start the compass: `!compass start`
-* Start the compass with only north and west: `!compass start wn`
-* Start the compass with only south and east `!compass start se`
-* Start the timer for 1 minute: `!compass timer start 1m`
-* Start the timer for 15 minute: `!compass start timer 15m`
-* Stop the timer prematurely: `!compass stop timer`
-* Stop the compass: `!compass stop`
-* Test command to add random bits to a random direction: `!testcompassbits`
+You can start the compass with `!compass start`.
+
+You can restrict which directions to show on the compass by specifying the letters of `news`: `!compass start sn`.
+
+## Stopping the compass
+
+You can stop the compass with `!compass stop`.
+
+## Starting the timer
+
+While the compass in running, you can start a timer with a number of minutes: `!compass timer start 5m`.
+
+Setting the timer while a timer is already running will update the timer with the new duration.
+
+Setting the timer again after a timer has ended will reactive the existing compass with the new duration.
+
+You can end the timer prematurely with `!compass stop timer`.
+
+## Testing the compass
+
+You can test the compass without expending bits with `!testcompassbits`. This will attempt to set a random number of bits to a random direction.
