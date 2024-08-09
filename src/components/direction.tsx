@@ -1,4 +1,5 @@
 import { DirectionProps } from "../model";
+import { EAST_KEYWORD, NORTH_KEYWORD, SOUTH_KEYWORD, WEST_KEYWORD } from "../params";
 
 function formatBits(bits: number): string {
     return (bits / 100).toLocaleString('en-US', {
@@ -17,17 +18,17 @@ function Direction({ bits, enabled, winner }: DirectionProps, label: string, id:
 }
 
 export function NorthDirection(props: DirectionProps) {
-    return Direction(props, '#North', 'direction-north');
+    return Direction(props, NORTH_KEYWORD, 'direction-north');
 }
 
 export function EastDirection(props: DirectionProps) {
-    return Direction(props, '#East', 'direction-east');
+    return Direction(props, EAST_KEYWORD, 'direction-east');
 }
 
 export function SouthDirection(props: DirectionProps) {
-    return Direction(props, '#South', 'direction-south');
+    return Direction(props, SOUTH_KEYWORD, 'direction-south');
 }
 
 export function WestDirection(props: DirectionProps) {
-    return Direction(props, '#West', 'direction-west');
+    return Direction(props, WEST_KEYWORD, 'direction-west');
 }

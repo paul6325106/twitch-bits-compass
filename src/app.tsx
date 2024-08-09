@@ -2,15 +2,11 @@ import _ from 'lodash';
 import { useEffect } from "react";
 
 import Chat from './chat';
+import { CHANNEL_NAME } from './params';
 import { Compass } from "./components/compass";
 import useCompassReducer from './reducer';
 
 import './style/app.scss';
-
-const CHANNEL_NAME = import.meta.env.VITE_CHANNEL_NAME;
-if (!CHANNEL_NAME) {
-    throw `Unvalid channel name: ${CHANNEL_NAME}`;
-}
 
 function App() {
     const [compass, dispatch] = useCompassReducer();

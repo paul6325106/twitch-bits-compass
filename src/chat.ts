@@ -1,5 +1,7 @@
 import ComfyJS, { OnMessageFlags } from "comfy.js";
 
+import { EAST_KEYWORD, NORTH_KEYWORD, SOUTH_KEYWORD, WEST_KEYWORD } from "./params";
+
 type StartCompassCallback = (north: boolean, east: boolean, south: boolean, west: boolean) => void;
 type StopCompassCallback = () => void;
 type StartTimerCallback = (milliseconds: number) => void;
@@ -70,13 +72,13 @@ function getRandomDirectionType(): DirectionType {
 
 function parseCheerMessage(message: string): DirectionType | null {
     const lowerCase = message.toLowerCase();
-    if (lowerCase.includes('#north')) {
+    if (lowerCase.includes(NORTH_KEYWORD.toLowerCase())) {
         return 'north';
-    } else if (lowerCase.includes('#east')) {
+    } else if (lowerCase.includes(EAST_KEYWORD.toLowerCase())) {
         return 'east';
-    } else if (lowerCase.includes('#south')) {
+    } else if (lowerCase.includes(SOUTH_KEYWORD.toLowerCase())) {
         return 'south'
-    } else if (lowerCase.includes('#west')) {
+    } else if (lowerCase.includes(WEST_KEYWORD.toLowerCase())) {
         return 'west';
     } else {
         return null;
