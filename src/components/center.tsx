@@ -1,11 +1,12 @@
 import { DirectionProps } from "../model";
 
-interface CircleProps {
-    className: string;
-    percentage: number;
+interface DirectionCircleProps {
+    id: string
+    percentage: number
+    winner: boolean
 }
 
-function DirectionCircle({ className, percentage }: CircleProps) {
+function DirectionCircle({ id, percentage, winner }: DirectionCircleProps) {
     const radius = 45;
     const circumference = 2 * Math.PI * radius;
 
@@ -14,7 +15,7 @@ function DirectionCircle({ className, percentage }: CircleProps) {
     };
 
     return (
-        <circle id={className} className='circle' style={style} r={radius} cx='50' cy='50' />
+        <circle id={id} className={`circle ${winner ? 'winner' : 'loser'}`} style={style} r={radius} cx='50' cy='50' />
     );
 }
 
@@ -38,11 +39,11 @@ export default function Center({ north, east, south, west }: CenterProps) {
     return (
         <div id='center'>
             <svg viewBox='0 0 100 100'>
-                <DirectionCircle className='circle-back' percentage={1} />
-                <DirectionCircle className='circle-west' percentage={westPercentage} />
-                <DirectionCircle className='circle-south' percentage={southPercentage} />
-                <DirectionCircle className='circle-east' percentage={eastPercentage} />
-                <DirectionCircle className='circle-north' percentage={northPercentage} />
+                <DirectionCircle id='circle-back' percentage={1} winner={true}/>
+                <DirectionCircle id='circle-west' percentage={westPercentage} winner={west.winner} />
+                <DirectionCircle id='circle-south' percentage={southPercentage} winner={south.winner} />
+                <DirectionCircle id='circle-east' percentage={eastPercentage} winner={east.winner} />
+                <DirectionCircle id='circle-north' percentage={northPercentage} winner={north.winner} />
             </svg>
         </div>
     );

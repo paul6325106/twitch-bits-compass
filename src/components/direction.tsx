@@ -7,9 +7,9 @@ function formatBits(bits: number): string {
     });
 }
 
-function Direction({ bits, enabled }: DirectionProps, label: string, id: string) {
+function Direction({ bits, enabled, winner }: DirectionProps, label: string, id: string) {
     return (
-        <div id={id} className={`direction ${enabled ? 'visible' : 'invisible'}`}>
+        <div id={id} className={`direction ${enabled ? 'visible' : 'invisible'} ${winner ? 'winner' : 'loser'}`}>
             <div className='direction-label'>{label}</div>
             <div className='direction-bits'>{formatBits(bits)}</div>
         </div>
