@@ -39,7 +39,7 @@ body {
 .circle {
     height: 400px;
     width: 400px;
-    transition: stroke-dasharray 1s;
+    transition: stroke-dasharray 1s, stroke 1s;
     stroke-width: 10;
     fill: none;
 }
