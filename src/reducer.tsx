@@ -80,15 +80,29 @@ function getStoppedTimer(compass: CompassProps): CompassProps {
 }
 
 function getAddedBits(compass: CompassProps, action: AddBitsAction): CompassProps {
-    // TODO set winner
-    // const maxBits = Math.max(...[north, east, south, west].map(d => d.bits));
-    // const northWinner = north.bits === maxBits;
-    // const eastWinner = east.bits === maxBits;
-    // const southWinner = south.bits === maxBits;
-    // const westWinner = west.bits === maxBits;
-
     const { directionType, bits } = action;
-    return _.update({ ...compass }, [directionType, 'bits'], oldBits => oldBits + bits);
+
+    const enabled: boolean = _.get(compass, [directionType, 'enabled'], false);
+
+    if (!enabled) {
+        return compass;
+    }
+
+    const newCompass = { ...compass };
+
+    const oldBits: number = _.get(newCompass, [directionType, 'bits'], 0);
+    const newBits = oldBits + bits;
+
+    _.update(newCompass, [directionType, 'bits'], () => newBits);
+
+    const maxBits = getMaxBits(newCompass);
+
+    return _.update(newCompass, [directionType, 'winner'], () => newBits === maxBits);
+}
+
+function getMaxBits(compass: CompassProps): number {
+    const { north, east, south, west } = compass;
+    return Math.max(...[north, east, south, west].map(direction => direction.bits));
 }
 
 function compassReducer(compass: CompassProps, action: CompassAction): CompassProps {
