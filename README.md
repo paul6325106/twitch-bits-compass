@@ -20,9 +20,9 @@ Right now you set your channel name as a param
 
 file:///path/to/repo/twitch-bits-compass/dist/index.html?channelName=voodoocowboy
 
-But need to change that, because OBS doesn't let you set params on local files
+But this doesn't work well with OBS, so this will change soon
 
-Highly recommend not ticking 'Shutdown source when not visible', because compass functionality is tied to browser source lifecycle.
+Highly recommend not ticking 'Shutdown source when not visible', because compass functionality is tied to browser source lifecycle
 
 # Commands
 
