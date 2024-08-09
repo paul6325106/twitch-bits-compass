@@ -15,26 +15,29 @@ function App() {
         const chat = Chat(getChannelName());
         let timeout: number | null = null;
 
+        // TODO need to rethink how I guard start/stops and where/how timeouts are created
+
         chat.onStartCompass((north, east, south, west) => {
+            timeout && clearTimeout(timeout);
             dispatch({ type: 'startCompass', north, east, south, west });
         });
 
         chat.onStopCompass(() => {
-            dispatch({ type: 'stopCompass' });
             timeout && clearTimeout(timeout);
+            dispatch({ type: 'stopCompass' });
         });
 
         chat.onStartTimer((milliseconds) => {
-            dispatch({ type: 'startTimer', milliseconds });
             timeout && clearTimeout(timeout);
+            dispatch({ type: 'startTimer', milliseconds });
             timeout = setTimeout(() => {
                 dispatch({ type: 'stopTimer' });
             }, milliseconds);
         });
 
         chat.onStopTimer(() => {
-            dispatch({ type: 'stopTimer' });
             timeout && clearTimeout(timeout);
+            dispatch({ type: 'stopTimer' });
         });
 
         chat.onAddBits((directionType, bits) => {
