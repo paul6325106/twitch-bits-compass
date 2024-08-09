@@ -13,30 +13,20 @@ function App() {
 
     useEffect(() => {
         const chat = Chat(getChannelName());
-        let timeout: number | null = null;
-
-        // TODO need to rethink how I guard start/stops and where/how timeouts are created
 
         chat.onStartCompass((north, east, south, west) => {
-            timeout && clearTimeout(timeout);
             dispatch({ type: 'startCompass', north, east, south, west });
         });
 
         chat.onStopCompass(() => {
-            timeout && clearTimeout(timeout);
             dispatch({ type: 'stopCompass' });
         });
 
         chat.onStartTimer((milliseconds) => {
-            timeout && clearTimeout(timeout);
             dispatch({ type: 'startTimer', milliseconds });
-            timeout = setTimeout(() => {
-                dispatch({ type: 'stopTimer' });
-            }, milliseconds);
         });
 
         chat.onStopTimer(() => {
-            timeout && clearTimeout(timeout);
             dispatch({ type: 'stopTimer' });
         });
 
@@ -46,9 +36,24 @@ function App() {
 
         return () => {
             chat.disconnect();
-            timeout && clearTimeout(timeout);
-        }
+        };
     }, []);
+
+    useEffect(() => {
+        if (compass.endTime === null) {
+            return;
+        }
+
+        const now = new Date().getTime();
+
+        const timeoutID = setTimeout(() => {
+            dispatch({ type: 'stopTimer' });
+        }, compass.endTime - now);
+
+        return () => {
+            clearTimeout(timeoutID);
+        };
+    }), [compass.endTime];
 
     return <Compass {...compass} />;
 }

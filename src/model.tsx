@@ -2,7 +2,7 @@ export interface CompassProps {
     active: boolean
     east: DirectionProps
     enabled: boolean
-    endTime: number
+    endTime: number | null
     north: DirectionProps
     south: DirectionProps
     west: DirectionProps

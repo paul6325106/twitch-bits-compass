@@ -14,7 +14,7 @@ export function Compass(props: CompassProps) {
     return (
         <div id='compass' className={`${active ? 'active' : 'inactive'}`}>
             <Center north={north} east={east} south={south} west={west} />
-            <Timer endTime={endTime} />
+            <Timer endTime={endTime || 0} />
             <NorthDirection { ...north } />
             <EastDirection { ...east  } />
             <SouthDirection { ...south } />

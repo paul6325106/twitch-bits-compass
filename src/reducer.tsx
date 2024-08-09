@@ -23,7 +23,7 @@ const initialCompass: CompassProps = {
         winner: false,
     },
     enabled: false,
-    endTime: 0,
+    endTime: null,
     north: {
         bits: 0,
         enabled: false,
@@ -41,7 +41,11 @@ const initialCompass: CompassProps = {
     },
 }
 
-function getStartedCompass({ north, east, south, west } : StartCompassAction): CompassProps {
+function getStartedCompass(compass: CompassProps, { north, east, south, west } : StartCompassAction): CompassProps {
+    if (compass.enabled) {
+        return compass;
+    }
+
     return {
         active: true,
         east: {
@@ -50,7 +54,7 @@ function getStartedCompass({ north, east, south, west } : StartCompassAction): C
             winner: false,
         },
         enabled: true,
-        endTime: 0,
+        endTime: null,
         north: {
             bits: 0,
             enabled: north,
@@ -69,17 +73,35 @@ function getStartedCompass({ north, east, south, west } : StartCompassAction): C
     };
 }
 
+function getStoppedCompass(compass: CompassProps): CompassProps {
+    return compass.enabled ? initialCompass : compass;
+}
+
 function getStartedTimer(compass: CompassProps, { milliseconds }: StartTimerAction): CompassProps {
+    if (!compass.enabled) {
+        return compass;
+    }
+
     const endTime = new Date().getTime() + milliseconds;
+
     return { ...compass, active: true, endTime };
 }
 
 function getStoppedTimer(compass: CompassProps): CompassProps {
+    if (!compass.enabled || !compass.active) {
+        return compass;
+    }
+
     const now = new Date().getTime();
+
     return { ...compass, active: false, endTime: now };
 }
 
 function getAddedBits(compass: CompassProps, action: AddBitsAction): CompassProps {
+    if (!compass.enabled || !compass.active) {
+        return compass;
+    }
+
     const { directionType, bits } = action;
 
     const enabled: boolean = _.get(compass, [directionType, 'enabled'], false);
@@ -107,11 +129,12 @@ function getMaxBits(compass: CompassProps): number {
 }
 
 function compassReducer(compass: CompassProps, action: CompassAction): CompassProps {
+    console.log(action);
     switch (action.type) {
         case "startCompass":
-            return getStartedCompass(action);
+            return getStartedCompass(compass, action);
         case "stopCompass":
-            return initialCompass;
+            return getStoppedCompass(compass);
         case 'startTimer':
             return getStartedTimer(compass, action);
         case 'stopTimer':
