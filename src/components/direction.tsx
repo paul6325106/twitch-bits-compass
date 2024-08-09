@@ -1,7 +1,4 @@
-export interface DirectionProps {
-    bits: number
-    enabled: boolean
-}
+import { DirectionProps } from "../model";
 
 function formatBits(bits: number): string {
     return (bits / 100).toLocaleString('en-US', {

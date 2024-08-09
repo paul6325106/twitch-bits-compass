@@ -4,7 +4,9 @@ import { useEffect } from "react";
 import Chat from './chat';
 import { getChannelName } from "./params";
 import { Compass } from "./components/compass";
-import { useCompassReducer } from './reducer';
+import useCompassReducer from './reducer';
+
+import './style/app.scss';
 
 function App() {
     const [compass, dispatch] = useCompassReducer();

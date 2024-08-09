@@ -1,4 +1,4 @@
-import { DirectionProps } from "./direction";
+import { DirectionProps } from "../model";
 
 interface CircleProps {
     className: string;
