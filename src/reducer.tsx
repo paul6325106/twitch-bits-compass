@@ -90,14 +90,15 @@ function getAddedBits(compass: CompassProps, action: AddBitsAction): CompassProp
 
     const newCompass = { ...compass };
 
-    const oldBits: number = _.get(newCompass, [directionType, 'bits'], 0);
-    const newBits = oldBits + bits;
-
-    _.update(newCompass, [directionType, 'bits'], () => newBits);
+    _.update(newCompass, [directionType, 'bits'], (oldBits) => oldBits + bits);
 
     const maxBits = getMaxBits(newCompass);
+    newCompass.north.winner = newCompass.north.bits === maxBits;
+    newCompass.east.winner = newCompass.east.bits === maxBits;
+    newCompass.south.winner = newCompass.south.bits === maxBits;
+    newCompass.west.winner = newCompass.west.bits === maxBits;
 
-    return _.update(newCompass, [directionType, 'winner'], () => newBits === maxBits);
+    return newCompass;
 }
 
 function getMaxBits(compass: CompassProps): number {
