@@ -1,50 +1,38 @@
-# React + TypeScript + Vite
+# twitch-bits-compass
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TODO
 
-Currently, two official plugins are available:
+# Building
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+TODO
 
-## Expanding the ESLint configuration
+npm run build
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Running
 
-- Configure the top-level `parserOptions` property like this:
+TODO
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Single file in /dist
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Load as local file in browser source
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Right now you set your channel name as a param
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+file:///path/to/repo/twitch-bits-compass/dist/index.html?channelName=voodoocowboy
+
+But need to change that, because OBS doesn't let you set params on local files
+
+Highly recommend not ticking 'Shutdown source when not visible', because compass functionality is tied to browser source lifecycle.
+
+# Commands
+
+TODO
+
+* Start the compass: `!compass start`
+* Start the compass with only north and west: `!compass start wn`
+* Start the compass with only south and east `!compass start se`
+* Start the timer for 1 minute: `!compass timer start 1m`
+* Start the timer for 15 minute: `!compass start timer 15m`
+* Stop the timer prematurely: `!compass stop timer`
+* Stop the compass: `!compass stop`
+* Test command to add random bits to a random direction: `!testcompassbits`
