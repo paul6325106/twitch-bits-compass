@@ -61,4 +61,4 @@ You can end the timer prematurely with `!compass stop timer`.
 
 #### Testing the compass
 
-You can test the compass without expending bits with `!testcompassbits`. This will attempt to set a random number of bits to a random direction.
+You can test the compass without expending bits with `!compass test`. This will parse the rest of your message and then try to add a random number of bits.

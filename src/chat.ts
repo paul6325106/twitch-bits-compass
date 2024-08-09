@@ -21,6 +21,7 @@ type CommandParams = {
     east: boolean
     south: boolean
     west: boolean
+    test: boolean
 }
 
 const regexMinutes = /\b([0-9]+)[Mm]\b/;
@@ -50,25 +51,11 @@ function parseCommandParams(message: string): CommandParams {
         east: news.includes('e'),
         south: news.includes('s'),
         west: news.includes('w'),
+        test: message.includes('test'),
     }
 }
 
 export type DirectionType = 'north' | 'east' | 'south' | 'west';
-
-function getRandomDirectionType(): DirectionType {
-    const random = Math.floor(Math.random() * 4);
-    switch (random) {
-        default:
-        case 0:
-            return 'north';
-        case 1:
-            return 'east'
-        case 2:
-            return 'south';
-        case 3:
-            return 'west';
-    }
-}
 
 function parseCheerMessage(message: string): DirectionType | null {
     const lowerCase = message.toLowerCase();
@@ -113,18 +100,18 @@ export default function Chat(channelName: string) {
     ComfyJS.Init(channelName);
 
     ComfyJS.onCommand = (_user, command, message, flags, _extra) => {
-        if (hasPermission(flags) && command === 'testcompassbits' && addBits) {
-            addBits(getRandomDirectionType(), Math.floor(Math.random() * 500));
-            return;
-        }
-
         if (!hasPermission(flags) || command !== 'compass') {
             return;
         }
 
-        const { timer, start, stop, milliseconds, north, east, south, west } = parseCommandParams(message);
+        const { timer, start, stop, milliseconds, north, east, south, west, test } = parseCommandParams(message);
 
-        if (timer) {
+        if (test) {
+            const directionType = parseCheerMessage(message);
+            if (directionType && addBits) {
+                addBits(directionType, Math.random() * 500);
+            }
+        } else if (timer) {
             if (start && startTimer && milliseconds !== null) {
                 startTimer(milliseconds);
             } else if (stop && stopTimer) {
