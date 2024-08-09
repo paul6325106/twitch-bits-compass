@@ -129,7 +129,6 @@ function getMaxBits(compass: CompassProps): number {
 }
 
 function compassReducer(compass: CompassProps, action: CompassAction): CompassProps {
-    console.log(action);
     switch (action.type) {
         case "startCompass":
             return getStartedCompass(compass, action);
