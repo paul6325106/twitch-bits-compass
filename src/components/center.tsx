@@ -8,6 +8,8 @@ interface DirectionCircleProps {
 }
 
 function DirectionCircle({ id, percentage, winner }: DirectionCircleProps) {
+    const cx = 50;
+    const cy = 50;
     const radius = 45;
     const circumference = 2 * Math.PI * radius;
 
@@ -16,7 +18,15 @@ function DirectionCircle({ id, percentage, winner }: DirectionCircleProps) {
     };
 
     return (
-        <circle id={id} className={`circle ${winner ? 'winner' : 'loser'}`} style={style} r={radius} cx='50' cy='50' />
+        <circle
+            id={id}
+            className={`circle ${winner ? 'winner' : 'loser'}`}
+            style={style}
+            r={radius}
+            cx={`${cx}`}
+            cy={`${cy}`}
+            transform={`rotate(-45, ${cx}, ${cy})`}
+        />
     );
 }
 
