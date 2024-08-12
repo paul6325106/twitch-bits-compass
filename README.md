@@ -21,6 +21,8 @@ The following properties can be modified in the `.env` file:
 
 Install Node.js. I wrote this against v20.12.2.
 
+Install dependencies with `npm install`.
+
 Then execute `npm run build`.
 
 ### Configuring
